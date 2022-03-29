@@ -48,6 +48,21 @@ export default function Application(props) {
   });
   // this will be passed to each appointment component as props
   function bookInterview(id, interview) {
+    
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({
+      ...state,
+      appointments
+    });
+
     console.log("this is bookInterview: ", id, interview);
   }
 
@@ -81,14 +96,6 @@ export default function Application(props) {
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
     })
   }, []);
-
-
-  // v this code will be implemented once we've created our getInterview selector function v
-
-  
-
-  
-  console.log("value of state.interviewers: ", state.interviewers);
   
   return (
     <main className="layout">
