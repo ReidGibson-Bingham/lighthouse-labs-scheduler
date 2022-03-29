@@ -18,38 +18,7 @@ export default function Appointment (props) {
   const { mode, transition, back } = useVisualMode(
     (props.interview ? SHOW : EMPTY)
   );
-
-  // console.log("props.interview.student", props.interview.student);
-
-  // The same logic as before determines the initial mode. When props.interview contains a value, then we want to pass useVisualMode the SHOW mode, if it is empty then we should pass EMPTY.
-  // const timeCheck = function () {
-  //   if (!props.time){
-  //     return "No appointments";
-  //   } else {
-  //     return `Appointment at ${props.time}`
-  //   }
-  // }
-
-  // const displayShow = function () {
-  //   if (props.interview){
-  //     <Show
-  //       student={props.interview.student}
-  //       interviewer={props.interview.interviewer}
-  //     />
-  //   } else {
-  //     emptyCheck();
-  //   }
-  // }
-
-  // console.log("props", props);
-  // const emptyCheck = function () {
-  //   if (props.time[0] < 5) {
-  //     return <Empty></Empty>
-  //   } 
-  // }
-  // console.log("props.time: ", props.time[0]);
-
-  // v this is a child of the bookInterview function in application // it needs to be passed to the form component
+  
   function save(name, interviewer) {
     const interview = {
       student: name,
