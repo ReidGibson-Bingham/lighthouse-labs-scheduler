@@ -20,7 +20,6 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    // v this is in place of the hardcoded appointments obj
     appointments: {}
   });
 
@@ -30,17 +29,20 @@ export default function Application(props) {
   
   const setDay = day => setState({ ...state, day });
 
-// v new & improved, uses dailyAppointments array instead of Object.values
+
 
   const appointmentList = dailyAppointments.map( appointment => {
-    // console.log("appointment.interview: ", appointment.interview);
+    const interview = getInterview(state, appointment.interview);
+    
     return (
       <Appointment
         key={appointment.id}
+        id={appointment.id}
         time={appointment.time}
-        interview={appointment.interview}
+        interview={interview}
         interviewers={state.interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
         // v prop spreading v
         // key={appointment.id} 
         // {...appointment}
@@ -49,7 +51,8 @@ export default function Application(props) {
   });
   // this will be passed to each appointment component as props
   function bookInterview(id, interview) {
-    
+    const url = `/api/appointments/${id}`
+
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -58,54 +61,62 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-
-    setState({
-      ...state,
-      appointments
-    });
-
-    // useEffect(() => {
-    //   const url = 'http://localhost:8001/api/appointments/:id'
-    //   Promise.all([
-    //     axios.put(url)
-    //   ]).then ((all) => {
-    //     setState(prev => ({...prev, id: all[0]}))
-    //   })
-    // })
-    const url = 'http://localhost:8001/api/appointments/:id'
-
-    console.log("test");
-
+    
+    console.log("firing just before axios", appointment);
+    
     return axios
-      .put(url, appointment)
+      .put(url, {interview})
       .then ((res) => {
-        console.log("^^ res, ", res);
-        setState(prev => ({...prev, id: res[0]}))
+        console.log("^^ res ", res);
+
+        setState({
+          ...state,
+          appointments
+        });
+
       })
       .catch((err) => {
-        console.log("&& error", err);
+        console.log("^^ error", err);
       }) 
     
   }
 
-  // day is not defined v, so i'm using state.day. the page isn't loading though...
+  
+  function cancelInterview(id) {
+    const url = `/api/appointments/${id}`
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: null 
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    
+    console.log("firing just before axios", appointment);
+    
+    return axios
+      .delete(url)
+      .then ((res) => {
+        console.log("^^ res ", res);
+
+        setState({
+          ...state,
+          appointments
+        });
+
+      })
+      .catch((err) => {
+        console.log("^^ error", err);
+      }) 
+    
+  }
+
+  
+
   const appointments = getAppointmentsForDay(state, state.day);
 
-  const schedule = appointments.map((appointment) => {
-      const interview = getInterview(state, appointment.interview);
-
-      return (
-        <Appointment
-          key={appointment.id}
-          id={appointment.id}
-          time={appointment.time}
-          interview={interview}
-        />
-      );
-  });
-
-
-  // v newer version of useEffect, because We can't list our appointments until we download the days data, followed by the appointments data. We are going to make a request to both endpoints at the same time
   useEffect(() => {
     const daysURL = 'http://localhost:8001/api/days';
     const appointmentsURL = 'http://localhost:8001/api/appointments';

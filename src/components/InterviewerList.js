@@ -7,8 +7,6 @@ export default function InterviewerList(props) {
 
   
   const modifiedInterviewers = Object.values(props.interviewers);
-
-  console.log("@@ props", props.value);
   
 
   const interviewerListItems = modifiedInterviewers.map((interviewer) => {
