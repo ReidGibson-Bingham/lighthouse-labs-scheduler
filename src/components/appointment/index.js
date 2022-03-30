@@ -14,6 +14,8 @@ const SHOW = "SHOW";
 const CREATE = "CREATE";
 
 export default function Appointment (props) {
+
+  console.log("## props", props);
   
   const { mode, transition, back } = useVisualMode(
     (props.interview ? SHOW : EMPTY)
@@ -24,33 +26,27 @@ export default function Appointment (props) {
       student: name,
       interviewer
     };
-    console.log("props from the appointment component: ", props);
+    
     props.bookInterview(props.id, interview);
-    console.log("props",props);
-    transition(SHOW)
+    
+    transition(SHOW);
     
   }
 
   
+
   return (
     <article className="Appointment"> 
       <Header time={props.time} />
         {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
         {mode === SHOW && (
           <Show
-            student={props.interview.student}
-            interviewer={props.interview.interviewer}
+            student={props.interview && props.interview.student}
+            interviewer={props.interview && props.interview.interviewer}
           />
         )}
-        {mode === CREATE && ( <Form student={props.student} interviewer ={props.interviewer} interviewers={[]} onSave={save}  onCancel={() => back() } 
+        {mode === CREATE && ( <Form student={props.student} interviewer ={props.interviewer} interviewers={props.interviewers} onSave={save}  onCancel={() => back() } 
        /> )} 
-      {/* {props.interview ? (
-        <Show 
-        student={props.interview.student}
-        interviewer={props.interview.interviewer.name}
-        />
-      ) : <Empty /> }  */}
-      {/* empty isn't supposed to be included past 5pm */}
     </article>
   );
 }

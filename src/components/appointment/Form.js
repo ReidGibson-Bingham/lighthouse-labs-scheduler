@@ -16,6 +16,8 @@ export default function Form(props) {
     props.onCancel();
   }
 
+  // console.log("** props.interviewers", props.interviewers);
+
 
   return (
     <main className="appointment__card appointment__card--create">
@@ -32,11 +34,9 @@ export default function Form(props) {
           />
         </form>
       <InterviewerList 
-        student={student}
-        interviewer={interviewer}
+        value={interviewer}
         interviewers={props.interviewers}
-        onSave={props.onSave}
-        onCancel={props.onCancel}
+        onChange={setInterviewer}
         
       />
       </section>

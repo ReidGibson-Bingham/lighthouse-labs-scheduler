@@ -33,12 +33,13 @@ export default function Application(props) {
 // v new & improved, uses dailyAppointments array instead of Object.values
 
   const appointmentList = dailyAppointments.map( appointment => {
-    console.log("appointment.interview: ", appointment.interview);
+    // console.log("appointment.interview: ", appointment.interview);
     return (
       <Appointment
         key={appointment.id}
         time={appointment.time}
         interview={appointment.interview}
+        interviewers={state.interviewers}
         bookInterview={bookInterview}
         // v prop spreading v
         // key={appointment.id} 
@@ -63,7 +64,28 @@ export default function Application(props) {
       appointments
     });
 
-    console.log("this is bookInterview: ", id, interview);
+    // useEffect(() => {
+    //   const url = 'http://localhost:8001/api/appointments/:id'
+    //   Promise.all([
+    //     axios.put(url)
+    //   ]).then ((all) => {
+    //     setState(prev => ({...prev, id: all[0]}))
+    //   })
+    // })
+    const url = 'http://localhost:8001/api/appointments/:id'
+
+    console.log("test");
+
+    return axios
+      .put(url, appointment)
+      .then ((res) => {
+        console.log("^^ res, ", res);
+        setState(prev => ({...prev, id: res[0]}))
+      })
+      .catch((err) => {
+        console.log("&& error", err);
+      }) 
+    
   }
 
   // day is not defined v, so i'm using state.day. the page isn't loading though...
@@ -96,6 +118,7 @@ export default function Application(props) {
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
     })
   }, []);
+
   
   return (
     <main className="layout">
@@ -114,7 +137,7 @@ export default function Application(props) {
       <section className="schedule">
         <Fragment>
           {appointmentList}
-          <Appointment key="last" time="5pm" />
+          <Appointment key="last" time="5pm" interviewers={state.interviewers} />
         </Fragment>
       
       </section>
