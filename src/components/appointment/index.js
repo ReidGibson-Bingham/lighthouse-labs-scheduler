@@ -23,8 +23,6 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment (props) {
-
-  console.log("props ", props);  
   
   const { mode, transition, back } = useVisualMode(
     (props.interview ? SHOW : EMPTY)
@@ -41,11 +39,7 @@ export default function Appointment (props) {
 
     props.bookInterview(props.id, interview)
     .then( (res) => {
-      if (!res) {
-        transition(ERROR_SAVE, true);  
-      } else {
         transition(SHOW);
-      }
     })
     .catch( (err) => {
       console.log("save error: ", err);
@@ -60,11 +54,7 @@ export default function Appointment (props) {
     props.cancelInterview(props.id)
     .then ( (res) => {
       console.log(".then Deleting", res);
-      if (!res) {
-        transition(ERROR_DELETE, true);  
-      } else {
         transition(EMPTY);
-      }
     })
     .catch( (err) => {
       console.log("delete error: ", err);

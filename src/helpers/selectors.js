@@ -51,8 +51,6 @@ export function getInterviewersForDay(state, day) {
 
   const map = findDay.interviewers.map(id => state.interviewers[id]);
 
-  console.log("map: ", map);
-
   return map;  
     
 }
