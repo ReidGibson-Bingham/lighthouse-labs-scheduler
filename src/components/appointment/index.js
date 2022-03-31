@@ -7,7 +7,6 @@ import Empty from "./Empty";
 import Status from "./Status";
 import useVisualMode from "hooks/useVisualMode";
 import Form from "./Form";
-// import { create } from "react-test-renderer";
 import Confirm from "./Confirm";
 import Error from "./Error";
 
@@ -34,6 +33,13 @@ export default function Appointment (props) {
       interviewer
     };
 
+    
+    // // in case they didn't select an interviewer or they didn't select a name
+    // if (!interview.student){
+    //   transition(ERROR_SAVE, true);
+    //   return; 
+    // }
+    
     transition(SAVING);
 
     props.bookInterview(props.id, interview)
@@ -43,7 +49,7 @@ export default function Appointment (props) {
     .catch( (err) => {
       console.log("save error: ", err);
       transition(ERROR_SAVE, true);
-    }); // the catches are only in this file, not where we make the axios requests (useApplicationData.js)
+    }); // the catches are only in this file, not where the axios requests are defined (useApplicationData.js)
   }
   
   function deleteInterview() {

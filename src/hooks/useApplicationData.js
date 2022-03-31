@@ -10,7 +10,7 @@ export default function useApplicationData () {
   });
 
   //////////////////////////////////////////////////////////
-  function subSpots (state) {
+  function updateSpots (state, operation) {
     const selectedDay = state.day;
     const days = state.days;
     let currentDay = null;
@@ -20,20 +20,12 @@ export default function useApplicationData () {
         break;
       }
     }
-    currentDay.spots --;
-  }
-
-  function addSpots (state) {
-    const selectedDay = state.day;
-    const days = state.days;
-    let currentDay = null;
-    for (const index in days) {
-      currentDay = days[index];
-      if (days[index].name === selectedDay){
-        break;
-      }
+    if (operation === 'add') {
+      currentDay.spots ++;
+    } 
+    if (operation === 'subtract') {
+      currentDay.spots --;
     }
-    currentDay.spots ++;
   }
   /////////////////////////////////////////////////////////////
 
@@ -51,15 +43,13 @@ export default function useApplicationData () {
       ...state.appointments,
       [id]: appointment
     };
-    
-    // console.log("firing just before axios", appointment);
-    
+
     return axios
       .put(url, {interview})
       .then ((res) => {
 
         //setting the state for spots////////
-        subSpots(state);
+        updateSpots(state, 'subtract');
         /////////////////////////////////////
 
         setState({
@@ -90,7 +80,7 @@ export default function useApplicationData () {
         console.log("^^ res ", res);
 
         //setting the state for spots////////
-        addSpots(state);
+        updateSpots(state, 'add');
         /////////////////////////////////////
 
         setState({
