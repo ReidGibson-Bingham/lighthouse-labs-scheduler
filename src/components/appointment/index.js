@@ -5,10 +5,9 @@ import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 import Status from "./Status";
-import { Fragment } from "react";
 import useVisualMode from "hooks/useVisualMode";
 import Form from "./Form";
-import { create } from "react-test-renderer";
+// import { create } from "react-test-renderer";
 import Confirm from "./Confirm";
 import Error from "./Error";
 
@@ -44,7 +43,7 @@ export default function Appointment (props) {
     .catch( (err) => {
       console.log("save error: ", err);
       transition(ERROR_SAVE, true);
-    });  
+    }); // the catches are only in this file, not where we make the axios requests (useApplicationData.js)
   }
   
   function deleteInterview() {
@@ -53,14 +52,12 @@ export default function Appointment (props) {
 
     props.cancelInterview(props.id)
     .then ( (res) => {
-      console.log(".then Deleting", res);
-        transition(EMPTY);
+      transition(EMPTY);
     })
     .catch( (err) => {
       console.log("delete error: ", err);
       transition(ERROR_DELETE, true);
-    })
-    
+    }) // the catches are only in this file, not where we make the axios requests (useApplicationData.js)
   }
 
   function confirmCheck() {

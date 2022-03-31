@@ -12,13 +12,10 @@ export default function Form(props) {
     setInterviewer(null);
   }
   const cancel = function () {
-    reset(); // the cancel function calls the reset function
+    reset(); 
     props.onCancel();
   }
   console.log("props.student", props.student);
-
-  // console.log("** props.interviewers", props.interviewers);
-
 
   return (
     <main className="appointment__card appointment__card--create">

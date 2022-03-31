@@ -1,7 +1,7 @@
 import React from "react";
 import "components/InterviewerList.scss";
-// import classNames from "classnames";
 import InterviewerListItem from "./InterviewerListItem";
+import PropTypes from 'prop-types'; 
 
 export default function InterviewerList(props) {
 
@@ -10,23 +10,17 @@ export default function InterviewerList(props) {
   
 
   const interviewerListItems = modifiedInterviewers.map((interviewer) => {
-    // console.log("interviewer.key", interviewer.key);
-    // console.log("props.id:", props.id);
-    // console.log("77 interviewer", interviewer);
+    
     return (
         <InterviewerListItem
           key={interviewer.id}
           name={interviewer.name}
           avatar={interviewer.avatar}
           selected={interviewer.id === props.value}
-          // selected={interviewer.id === props.interviewer}
-          // setInterviewer={() => props.setInterviewer(interviewer.id)}
           setInterviewer={() => props.onChange(interviewer.id)} 
         />
       );
   });
-  
-  // const InterviewerListItems = props.
 
   return (
 
@@ -38,4 +32,13 @@ export default function InterviewerList(props) {
     </section>
   );
 };
+
+
+//using the prop-types library to test for errors
+//changing the prop type from array to string in the InterviewerList prop declaration in Form.js file and testing to see if that creates an error here
+/////////////////////////////////////////////////
+InterviewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired
+};
+/////////////////////////////////////////////////
 
