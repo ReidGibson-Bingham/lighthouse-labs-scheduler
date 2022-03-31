@@ -49,18 +49,10 @@ export function getInterviewersForDay(state, day) {
     return [];
   }
 
-  console.log("finding the day: ", findDay.interviewers);
-
   const map = findDay.interviewers.map(id => state.interviewers[id]);
-  console.log("map: ", map);
-  // if (!selectedInterviewer) {
-  //   return [];
-  // }
-  
 
-  // const appointments = selectedDay.appointments.map( appointmentID => state.appointments[appointmentID]);
+  console.log("map: ", map);
 
   return map;  
     
-  //... returns an array of appointments for that day
 }

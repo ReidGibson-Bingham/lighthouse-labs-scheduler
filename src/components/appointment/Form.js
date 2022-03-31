@@ -15,6 +15,7 @@ export default function Form(props) {
     reset(); // the cancel function calls the reset function
     props.onCancel();
   }
+  console.log("props.student", props.student);
 
   // console.log("** props.interviewers", props.interviewers);
 
@@ -27,7 +28,7 @@ export default function Form(props) {
             className="appointment__create-input text--semi-bold"
             name="name"
             type="text"
-            value={props.student}
+            value={student}
             onChange={(event) => setStudent(event.target.value)}
             placeholder="Enter Student Name"
           
