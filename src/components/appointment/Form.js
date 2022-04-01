@@ -15,8 +15,6 @@ export default function Form(props) {
     reset(); 
     props.onCancel();
   }
-  
-////////////////////////////////////////////////////////
 
   console.log("props from the Form ", props);
 
@@ -30,7 +28,6 @@ export default function Form(props) {
     setError("");
     props.onSave(student, interviewer);
   }
-///////////////////////////////////////////////////////
 
   return (
     <main className="appointment__card appointment__card--create">
@@ -43,7 +40,6 @@ export default function Form(props) {
             value={student}
             onChange={(event) => setStudent(event.target.value)}
             placeholder="Enter Student Name"
-            // data-testid="Lydia Miller-Jones"
           />
           
         </form>
