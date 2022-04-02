@@ -1,11 +1,9 @@
 import React from "react";
 import "components/Application.scss";
 import DayList from "./DayList";
-import { Fragment } from "react";
 import "components/appointment";
 import Appointment from "components/appointment";
-import { getAppointmentsForDay, getInterviewersForDay } from "helpers/selectors";
-import { getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors";
 import useApplicationData from "hooks/useApplicationData";
 
 export default function Application() {
@@ -47,11 +45,10 @@ export default function Application() {
         <img className="sidebar__lhl sidebar--centered" src="images/lhl.png"alt="Lighthouse Labs"/>
       </section>
       <section className="schedule">
-        <Fragment>
-          {appointmentList}
-          <Appointment key="last" time="5pm"/>
-        </Fragment>
-      
+  
+        {appointmentList}
+        <Appointment key="last" time="5pm" />
+        
       </section>
     </main>
   );

@@ -9,7 +9,7 @@ export default function useApplicationData () {
     interviewers: {}
   });
 
-  //////////////////////////////////////////////////////////
+  // this function for updating spots was the best i could come up with, i tried to loop through the state.days and state.appointments but i ended up getting pretty confused and just went with this
   function updateSpots (state, operation) {
     const selectedDay = state.day;
     const days = state.days;
@@ -27,7 +27,6 @@ export default function useApplicationData () {
       currentDay.spots --;
     }
   }
-  /////////////////////////////////////////////////////////////
 
   const setDay = day => setState({ ...state, day });
 
@@ -48,9 +47,7 @@ export default function useApplicationData () {
       .put(url, {interview})
       .then ((res) => {
 
-        //setting the state for spots////////
         updateSpots(state, 'subtract');
-        /////////////////////////////////////
 
         setState({
           ...state,
@@ -79,9 +76,7 @@ export default function useApplicationData () {
       .then ((res) => {
         console.log("^^ res ", res);
 
-        //setting the state for spots////////
         updateSpots(state, 'add');
-        /////////////////////////////////////
 
         setState({
           ...state,

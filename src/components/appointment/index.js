@@ -34,12 +34,6 @@ export default function Appointment (props) {
     };
 
     
-    // // in case they didn't select an interviewer or they didn't select a name
-    // if (!interview.student){
-    //   transition(ERROR_SAVE, true);
-    //   return; 
-    // }
-    
     transition(SAVING);
 
     props.bookInterview(props.id, interview)
@@ -77,7 +71,8 @@ export default function Appointment (props) {
   return (
     <article className="Appointment"> 
       <Header time={props.time} />
-        {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+        {/* Below is a bandaid solution to prevent the Empty component from showing up after 5pm */}
+        {mode === EMPTY && props.time !== "5pm" && <Empty onAdd={() => transition(CREATE)} />}
         {mode === SHOW && (
           <Show
             student={props.interview && props.interview.student}
@@ -98,6 +93,3 @@ export default function Appointment (props) {
     </article>
   );
 }
-
-// All <Appointment> components will render a <Header> that takes in a time prop.
-// If props.interview (an interview object) is truthy the <Appointment> will render the <Show> component, else it should render the <Empty> component.
