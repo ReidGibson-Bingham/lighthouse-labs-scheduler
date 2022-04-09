@@ -16,8 +16,6 @@ export default function Form(props) {
     props.onCancel();
   }
 
-  console.log("props from the Form ", props);
-
   const [error, setError] = useState("");
 
   function validate() {
