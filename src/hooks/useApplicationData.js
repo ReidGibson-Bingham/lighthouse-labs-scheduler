@@ -9,25 +9,6 @@ export default function useApplicationData () {
     interviewers: {}
   });
 
-  // this function for updating spots was the best i could come up with, i tried to loop through the state.days and state.appointments but i ended up getting pretty confused and just went with this
-  // function updateSpots (state, operation) {
-  //   const selectedDay = state.day;
-  //   const days = state.days;
-  //   let currentDay = null;
-  //   for (const index in days) {
-  //     currentDay = days[index];
-  //     if (days[index].name === selectedDay){
-  //       break;
-  //     }
-  //   }
-  //   if (operation === 'add') {
-  //     currentDay.spots ++;
-  //   } 
-  //   if (operation === 'subtract') {
-  //     currentDay.spots --;
-  //   }
-  // }
-
   const checkInterviewStatus = function (day, appointments) {
     let count = 0;
     for (const appointment of day.appointments) {
