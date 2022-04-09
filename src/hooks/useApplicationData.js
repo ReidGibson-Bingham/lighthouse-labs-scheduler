@@ -10,22 +10,39 @@ export default function useApplicationData () {
   });
 
   // this function for updating spots was the best i could come up with, i tried to loop through the state.days and state.appointments but i ended up getting pretty confused and just went with this
-  function updateSpots (state, operation) {
-    const selectedDay = state.day;
-    const days = state.days;
-    let currentDay = null;
-    for (const index in days) {
-      currentDay = days[index];
-      if (days[index].name === selectedDay){
-        break;
+  // function updateSpots (state, operation) {
+  //   const selectedDay = state.day;
+  //   const days = state.days;
+  //   let currentDay = null;
+  //   for (const index in days) {
+  //     currentDay = days[index];
+  //     if (days[index].name === selectedDay){
+  //       break;
+  //     }
+  //   }
+  //   if (operation === 'add') {
+  //     currentDay.spots ++;
+  //   } 
+  //   if (operation === 'subtract') {
+  //     currentDay.spots --;
+  //   }
+  // }
+
+  const checkInterviewStatus = function (day, appointments) {
+    let count = 0;
+    for (const appointment of day.appointments) {
+      if (appointments[appointment]["interview"] === null) {
+        count ++;
       }
     }
-    if (operation === 'add') {
-      currentDay.spots ++;
-    } 
-    if (operation === 'subtract') {
-      currentDay.spots --;
-    }
+    return count;
+  }
+
+  const updateSpots = function (days, appointments) {
+    const spots = days.map((day) => {
+      return {...day, spots: checkInterviewStatus(day, appointments)}
+    })
+    return spots;
   }
 
   const setDay = day => setState({ ...state, day });
@@ -43,15 +60,16 @@ export default function useApplicationData () {
       [id]: appointment
     };
 
+    const days = updateSpots(state.days, appointments);
+
     return axios
       .put(url, {interview})
       .then ((res) => {
 
-        updateSpots(state, 'subtract');
-
         setState({
           ...state,
-          appointments
+          appointments, 
+          days
 
         });
 
@@ -70,17 +88,19 @@ export default function useApplicationData () {
       ...state.appointments,
       [id]: appointment
     };
+
+    const days = updateSpots(state.days, appointments);
     
     return axios
       .delete(url)
       .then ((res) => {
         console.log("^^ res ", res);
 
-        updateSpots(state, 'add');
-
         setState({
           ...state,
-          appointments
+          appointments, 
+          days
+
         });
 
       })
