@@ -22,11 +22,11 @@ export default function Form(props) {
     if (student === "") {
       setError("Student name cannot be blank");
       return;
-    }
+    } // shows an error if no name is given
     if (!interviewer) {
       setError("must select an interviewer");
       return; 
-    }
+    } // shows an error if no interviewer is selected
     setError("");
     props.onSave(student, interviewer);
   }
